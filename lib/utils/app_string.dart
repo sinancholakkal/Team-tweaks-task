@@ -21,5 +21,6 @@ class AppStrings {
   static const logoutContent = "Are you sure you want to logout?";
   static const logoutS = "Logout successful";
   static const logoutF = "Logout failed";
+ static final List<String> genders = ["Male", "Female", "Other"];
 
 }
