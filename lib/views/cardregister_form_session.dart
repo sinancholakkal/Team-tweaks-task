@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart'
     show BlocConsumer, BlocListener, MultiBlocListener, read, ReadContext;
 import 'package:go_router/go_router.dart';
+import 'package:team_week_task/models/user_model.dart';
+import 'package:team_week_task/state/auth_bloc/auth_bloc.dart';
 import 'package:team_week_task/state/gender_bloc/gender_bloc.dart';
 import 'package:team_week_task/state/image_pick_bloc/image_pick_bloc.dart';
 import 'package:team_week_task/utils/app_string.dart';
 import 'package:team_week_task/utils/validators.dart';
+import 'package:team_week_task/views/loading.dart';
 import 'package:team_week_task/views/widgets/elevated_button.dart';
 import 'package:team_week_task/views/widgets/gender_selecter_widget.dart';
 import 'package:team_week_task/views/widgets/rich_text_widget.dart';
@@ -43,22 +46,22 @@ class _CardRegisterFormSessionState extends State<CardRegisterFormSession> {
 
   @override
   Widget build(BuildContext context) {
-    // return BlocListener<AuthBloc, AuthState>(
-    //   listener: (context, state) {
-    //     if (state is AuthLoadingState) {
-    //       loadingWidget(context);
-    //     } else if (state is AuthLoadedState) {
-    //       context.pop();
-    //       flutterToast(msg: "${state.message}! Please verify your email");
-    //       context.go("/login");
-    //     } else if (state is AuthErrorState) {
-    //       context.pop();
-    //       flutterToast(msg: state.errorMessage);
-    //     }
-    //   },
-    //   child:
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoadingState) {
+          loadingWidget(context);
+        } else if (state is AuthLoadedState) {
+          context.pop();
+          //flutterToast(msg: "${state.message}! Please verify your email");
+          context.go("/home");
+        } else if (state is AuthErrorState) {
+          context.pop();
+          flutterToast(msg: state.errorMessage);
+        }
+      },
+      child:
 
-    return MultiBlocListener(
+     MultiBlocListener(
       listeners: [
         BlocListener<GenderBloc, GenderState>(
           listener: (context, state) {
@@ -102,7 +105,9 @@ class _CardRegisterFormSessionState extends State<CardRegisterFormSession> {
                         child: IconButton(
                           //Pick the image from galery
                           onPressed: () {
-                            context.read<ImagePickBloc>().add(ImagePickingEvent());
+                            context.read<ImagePickBloc>().add(
+                              ImagePickingEvent(),
+                            );
                           },
                           icon: const Icon(Icons.add_a_photo, size: 30),
                         ),
@@ -115,7 +120,7 @@ class _CardRegisterFormSessionState extends State<CardRegisterFormSession> {
               GenderChoiceChip(),
               //name----------
               TextFormFieldWidget(
-                labeltext: AppStrings.firstname,
+                labeltext: AppStrings.name,
                 controller: nameController,
                 validator: (p0) {
                   return Validation.nameValidate(value: p0, comment: "Name");
@@ -168,26 +173,21 @@ class _CardRegisterFormSessionState extends State<CardRegisterFormSession> {
                 onPressed: () {
                   if (_formKey.currentState!.validate() &&
                       genderController != null) {
-                    if(imagebyte==null){
+                    if (imagebyte == null) {
                       flutterToast(msg: "Please select your image!");
                       log("Image no selected");
-                    }else{
+                    } else {
                       log(" Validated--------------------");
+                      final UserModel userModel = UserModel(
+                        gender: genderController!,
+                        name: nameController.text.trim(),
+                        phone: contactNumberController.text.trim(),
+                        password: passwordController.text.trim(),
+                        profile: imagebyte!,
+                        email: emailController.text.trim(),
+                      );
+                      context.read<AuthBloc>().add(UserRegisterEvent(userModel: userModel));
                     }
-                    
-
-                    // final registerModel = RegisterModel(
-                    //   firstname: firstNameController.text.trim(),
-                    //   middlename: middleNameController.text.trim(),
-                    //   lastname: lastNameController.text.trim(),
-                    //   email: emailController.text.trim(),
-                    //   contactno: contactNumberController.text.trim(),
-                    //   password: passwordController.text.trim(),
-                    //   confirmpassword: conformPasswordController.text.trim(),
-                    // );
-                    // context.read<AuthBloc>().add(
-                    //   RegisterEvent(registerModel: registerModel),
-                    // );
                   } else {
                     log("Not Validated--------------------");
                   }
@@ -205,6 +205,6 @@ class _CardRegisterFormSessionState extends State<CardRegisterFormSession> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

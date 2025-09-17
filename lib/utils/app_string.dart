@@ -7,8 +7,8 @@ class AppStrings {
   static const String dontaccount = "Don't have an account?";
   static const String welcomeback = "Welcome Back!";
   static const String createAnAcc = "Create an Account";
-  static const String firstname = "First Name";
-  static const String lastname = "Last Name";
+  static const String name = "Name";
+
   static const String middlename = "Middle Name";
   static const String contactno = "Contact No";
   static const String conformpassword = "Confirm Password";
