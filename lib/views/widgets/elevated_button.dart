@@ -22,7 +22,7 @@ class ElevatedWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        child: Text(text),
+        child: Text(text,style: TextStyle(color: kWhite),),
       ),
     );
   }
