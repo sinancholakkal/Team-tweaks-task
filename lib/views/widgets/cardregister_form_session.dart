@@ -10,7 +10,7 @@ import 'package:team_week_task/state/gender_bloc/gender_bloc.dart';
 import 'package:team_week_task/state/image_pick_bloc/image_pick_bloc.dart';
 import 'package:team_week_task/utils/app_string.dart';
 import 'package:team_week_task/utils/validators.dart';
-import 'package:team_week_task/views/loading.dart';
+import 'package:team_week_task/views/widgets/loading.dart';
 import 'package:team_week_task/views/widgets/elevated_button.dart';
 import 'package:team_week_task/views/widgets/gender_selecter_widget.dart';
 import 'package:team_week_task/views/widgets/rich_text_widget.dart';

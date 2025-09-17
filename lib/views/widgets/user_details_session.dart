@@ -33,7 +33,6 @@ class _UserDetailsSessionState extends State<UserDetailsSession> {
                   Container(
                     height: 250,
                     width: double.infinity,
-                    // decoration: BoxDecoration(borderRadius: BorderRadius.vertical(bottom: Radius.elliptical(100, 200))),
                     decoration: const BoxDecoration(
                       color: Colors.indigo,
                       borderRadius: BorderRadius.vertical(
@@ -61,26 +60,26 @@ class _UserDetailsSessionState extends State<UserDetailsSession> {
                       children: [
                         Card(
                           child: ListTile(
-                            title: const Text(AppStrings.name), //Student name
-                            subtitle: Text("Muhammed Sinan"),
+                            title: const Text(AppStrings.name), //user name
+                            subtitle: Text(userModel.name),
                           ),
                         ),
                         Card(
                           child: ListTile(
-                            title: const Text(AppStrings.email), //Student Age
-                            subtitle: Text("21"),
+                            title: const Text(AppStrings.email), //user email
+                            subtitle: Text(userModel.email),
                           ),
                         ),
                         Card(
                           child: ListTile(
-                            title: const Text("Gender"), //Student Guardian
-                            subtitle: Text("Male"),
+                            title: const Text("Gender"), //user Gender
+                            subtitle: Text(userModel.gender),
                           ),
                         ),
                         Card(
                           child: ListTile(
-                            title: const Text("Phone"), //Student Contact number
-                            subtitle: Text("8949459393"),
+                            title: const Text(AppStrings.contactno), //user Contact number
+                            subtitle: Text(userModel.phone),
                           ),
                         ),
                       ],

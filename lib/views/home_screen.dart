@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:team_week_task/state/auth_bloc/auth_bloc.dart';
 import 'package:team_week_task/utils/app_color.dart';
 import 'package:team_week_task/utils/app_string.dart';
-import 'package:team_week_task/views/loading.dart';
+import 'package:team_week_task/views/widgets/loading.dart';
 import 'package:team_week_task/views/widgets/show_diolog.dart';
 import 'package:team_week_task/views/widgets/toast.dart';
 import 'package:team_week_task/views/widgets/user_details_session.dart';
@@ -35,8 +35,8 @@ class HomeScreen extends StatelessWidget {
           onPressed: () {
             showDiolog(
               context: context,
-              title: "Logout",
-              content: "Are you sure you want to log out?",
+              title: AppStrings.logout,
+              content: AppStrings.logoutContent,
               cancelTap: () => context.pop(),
               confirmTap: () {
                 context.read<AuthBloc>().add(UserLogoutEvent());

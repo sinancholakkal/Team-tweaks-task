@@ -8,12 +8,9 @@ class AppStrings {
   static const String welcomeback = "Welcome Back!";
   static const String createAnAcc = "Create an Account";
   static const String name = "Name";
-
-  static const String middlename = "Middle Name";
   static const String contactno = "Contact No";
   static const String conformpassword = "Confirm Password";
   static const String alreadycc = "Already have an account";
-  static const String accessToken = "accessToken";
   static const String lSuccessMsg = "Successfully logged in";
   static const String cancel = "cancel";
   static const conform = "Yes, Confirm";

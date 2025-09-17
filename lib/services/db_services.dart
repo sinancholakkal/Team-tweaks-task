@@ -48,11 +48,9 @@ class DbServices implements AuthServices {
   }
 
   Future<UserModel>getUser()async{
-    log("called getUser");
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     int? userId = preferences.getInt("userid");
-    log(userId!.toString());
     final db = await Hive.openBox<UserModel>('userregisterinfo');
     if(userId!=null){
       return db.getAt(userId)!;

@@ -38,10 +38,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         if (userModels.isNotEmpty) {
           for (var model in userModels) {
+            log(model.email);
+            log(model.password);
             if (model.email == event.email &&
                 model.password == event.password) {
+                  
+              await UserCred.saveUser(model.email, model.password, model.id!);
               emit(AuthLoadedState(message: "Login success!"));
-              await UserCred.saveUser(model.email, model.password,model.id!);
+              log("Auth loaded state emited");
             }
           }
           emit(AuthErrorState(errorMessage: "Email and passwod doesn't match"));
