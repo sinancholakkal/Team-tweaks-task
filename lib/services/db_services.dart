@@ -22,7 +22,7 @@ class DbServices implements AuthServices {
       userModel.id = key;
       await db.put(key, userModel);
       log("User added in hive and sharedprf called");
-      await UserCred.saveUser(userModel.email, userModel.password);
+      await UserCred.saveUser(userModel.email, userModel.password,key);
       return true;
     } catch (e) {
       throw e.toString();
@@ -45,6 +45,23 @@ class DbServices implements AuthServices {
   Future<void> logout()async {
    SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.clear();
+  }
+
+  Future<UserModel>getUser()async{
+    log("called getUser");
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    int? userId = preferences.getInt("userid");
+    log(userId!.toString());
+    final db = await Hive.openBox<UserModel>('userregisterinfo');
+    if(userId!=null){
+      return db.getAt(userId)!;
+      
+    }else{
+      log("User id is null while fetch user details");
+
+    }
+    throw "";
   }
   
 }

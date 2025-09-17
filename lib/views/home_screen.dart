@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:team_week_task/state/auth_bloc/auth_bloc.dart';
+import 'package:team_week_task/utils/app_color.dart';
+import 'package:team_week_task/utils/app_string.dart';
 import 'package:team_week_task/views/loading.dart';
 import 'package:team_week_task/views/widgets/show_diolog.dart';
 import 'package:team_week_task/views/widgets/toast.dart';
+import 'package:team_week_task/views/widgets/user_details_session.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,7 +15,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Team Weaks"), centerTitle: true),
+      appBar: AppBar(title: Text("Team Tweaks"), centerTitle: true),
+      //UserDetailsSession------------
+      body: UserDetailsSession(),
       floatingActionButton: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoadingState) {
@@ -44,3 +49,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+

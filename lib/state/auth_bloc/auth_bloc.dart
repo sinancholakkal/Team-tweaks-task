@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:team_week_task/models/user_model.dart';
 import 'package:team_week_task/services/db_services.dart';
+import 'package:team_week_task/services/user_cred.dart';
 import 'package:team_week_task/utils/app_string.dart';
 
 part 'auth_event.dart';
@@ -40,6 +41,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             if (model.email == event.email &&
                 model.password == event.password) {
               emit(AuthLoadedState(message: "Login success!"));
+              await UserCred.saveUser(model.email, model.password,model.id!);
             }
           }
           emit(AuthErrorState(errorMessage: "Email and passwod doesn't match"));

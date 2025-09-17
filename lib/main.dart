@@ -6,6 +6,7 @@ import 'package:team_week_task/routes/app_router.dart';
 import 'package:team_week_task/state/auth_bloc/auth_bloc.dart';
 import 'package:team_week_task/state/gender_bloc/gender_bloc.dart';
 import 'package:team_week_task/state/image_pick_bloc/image_pick_bloc.dart';
+import 'package:team_week_task/state/user_bloc/user_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => GenderBloc()),
         BlocProvider(create: (context) => ImagePickBloc()),
         BlocProvider(create: (context) => AuthBloc()),
+        BlocProvider(create: (context) => UserBloc()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
