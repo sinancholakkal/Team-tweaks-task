@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:team_week_task/routes/app_router.dart';
 import 'package:team_week_task/state/gender_bloc/gender_bloc.dart';
+import 'package:team_week_task/state/image_pick_bloc/image_pick_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => GenderBloc(),),
+        BlocProvider(create: (context) => ImagePickBloc(),),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
