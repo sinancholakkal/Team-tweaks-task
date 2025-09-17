@@ -28,5 +28,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthErrorState(errorMessage: "Login field!"));
       }
     });
+     on<LoaginEvent>((event, emit) async{
+      log("Login event entered");
+     emit(AuthLoadingState());
+      try {
+        final userModels = await authServices.userLogin();
+      
+        if(userModels.isNotEmpty){
+          userModels.forEach((model){
+            if(model.email==event.email && model.password==event.password){
+              emit(AuthLoadedState(message: "Login success!"));
+            }
+          });
+          emit(AuthErrorState(errorMessage: "Email and passwod doesn't match"));
+          
+        }else{
+          log("login is field in event");
+          emit(AuthErrorState(errorMessage: "Email and passwod doesn't match"));
+        }
+      } catch (e) {
+        log("login is field in event");
+        emit(AuthErrorState(errorMessage: "Login field!"));
+      }
+    });
   }
 }

@@ -1,14 +1,18 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:team_week_task/state/auth_bloc/auth_bloc.dart';
 import 'package:team_week_task/utils/app_color.dart';
 import 'package:team_week_task/utils/app_string.dart';
 import 'package:team_week_task/utils/validators.dart';
+import 'package:team_week_task/views/loading.dart';
 import 'package:team_week_task/views/widgets/elevated_button.dart';
 import 'package:team_week_task/views/widgets/rich_text_widget.dart';
 import 'package:team_week_task/views/widgets/text_feild.dart';
 import 'package:team_week_task/views/widgets/text_form_widget.dart';
+import 'package:team_week_task/views/widgets/toast.dart';
 
 class CardLoginFormSession extends StatefulWidget {
   const CardLoginFormSession({super.key});
@@ -33,7 +37,20 @@ class _CardLoginFormSessionState extends State<CardLoginFormSession> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is AuthLoadingState) {
+          loadingWidget(context);
+        } else if (state is AuthLoadedState) {
+          context.pop();
+          flutterToast(msg: state.message);
+          context.go("/home");
+        } else if (state is AuthErrorState) {
+          context.pop();
+          flutterToast(msg: state.errorMessage);
+        }
+      },
+      child: Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(22),
@@ -75,15 +92,13 @@ class _CardLoginFormSessionState extends State<CardLoginFormSession> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     log(" Validated--------------------");
-
-                    // final loginModel = LoginModel(
-                    //   email: emailController.text.trim(),
-                    //   password: passwordController.text.trim(),
-                    // );
-                    // log("Login Bloc called");
-                    // context.read<AuthBloc>().add(
-                    //   LoginEvent(loginModel: loginModel),
-                    // );
+                    context.read<AuthBloc>().add(
+                      LoaginEvent(
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                      ),
+                    );
+                    log("Event called");
                   } else {
                     log("Not Validated--------------------");
                   }
@@ -100,6 +115,7 @@ class _CardLoginFormSessionState extends State<CardLoginFormSession> {
             ],
           ),
         ),
-      );
+      ),
+    );
   }
 }

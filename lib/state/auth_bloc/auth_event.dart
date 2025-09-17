@@ -9,3 +9,11 @@ class UserRegisterEvent extends AuthEvent{
   UserRegisterEvent({required this.userModel});
   
 }
+
+class LoaginEvent extends AuthEvent{
+  final String email;
+  final String password;
+
+  LoaginEvent({required this.email, required this.password});
+  
+}

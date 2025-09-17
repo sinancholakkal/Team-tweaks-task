@@ -20,4 +20,16 @@ class DbServices implements AuthServices {
       return false;
     }
   }
+
+  @override
+  Future<List<UserModel>> userLogin() async {
+    List<UserModel> models = [];
+    try {
+      final db = await Hive.openBox<UserModel>('userregisterinfo');
+      models.addAll(db.values.toList());
+    } catch (e) {
+      log(e.toString());
+    }
+    return models;
+  }
 }
