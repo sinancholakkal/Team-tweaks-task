@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:medb_task/utils/app_color.dart';
-import 'package:medb_task/utils/app_string.dart';
-import 'package:medb_task/widgets/custom_button.dart';
+import 'package:team_week_task/utils/app_color.dart';
+import 'package:team_week_task/utils/app_string.dart';
+import 'package:team_week_task/views/widgets/custom_button.dart';
 
 Future<dynamic> showDiolog({
   required BuildContext context,

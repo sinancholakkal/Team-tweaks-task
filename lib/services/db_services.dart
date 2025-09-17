@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:hive_flutter/adapters.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:team_week_task/models/user_model.dart';
 import 'package:team_week_task/services/auth_services.dart';
 import 'package:team_week_task/services/user_cred.dart';
@@ -9,6 +10,13 @@ class DbServices implements AuthServices {
   @override
   Future<bool> userRegister(UserModel userModel) async {
     try {
+      List<UserModel>userModels = await userLogin();
+      userModels.forEach((model){
+        log(model.email.toString());
+        if(model.email==userModel.email){
+          throw("This email is already registered");
+        }
+      });
       final db = await Hive.openBox<UserModel>('userregisterinfo');
       final key = await db.add(userModel);
       userModel.id = key;
@@ -17,7 +25,7 @@ class DbServices implements AuthServices {
       await UserCred.saveUser(userModel.email, userModel.password);
       return true;
     } catch (e) {
-      return false;
+      throw e.toString();
     }
   }
 
@@ -32,4 +40,11 @@ class DbServices implements AuthServices {
     }
     return models;
   }
+  
+  @override
+  Future<void> logout()async {
+   SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.clear();
+  }
+  
 }

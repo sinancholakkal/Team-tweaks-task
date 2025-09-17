@@ -17,7 +17,6 @@ class _SplashScreenState extends State<SplashScreen> {
     final prefs = await SharedPreferences.getInstance();
   final savedEmail = prefs.getString('email');
     await Future.delayed(Duration(seconds: 2));
-    prefs.clear();
     log(savedEmail.toString());
     if(savedEmail !=null){
 

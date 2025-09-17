@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:team_week_task/models/user_model.dart';
 import 'package:team_week_task/services/db_services.dart';
+import 'package:team_week_task/utils/app_string.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -11,44 +12,55 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final authServices = DbServices();
   AuthBloc() : super(AuthInitial()) {
-    on<UserRegisterEvent>((event, emit) async{
-     emit(AuthLoadingState());
+    on<UserRegisterEvent>((event, emit) async {
+      emit(AuthLoadingState());
       try {
         bool isRegister = await authServices.userRegister(event.userModel);
-      
-        if(isRegister){
+
+        if (isRegister) {
           log("Register is success in event");
           emit(AuthLoadedState(message: "Register success!"));
-        }else{
+        } else {
           log("Register is field in event");
-          emit(AuthErrorState(errorMessage: "Login field!"));
+          emit(AuthErrorState(errorMessage: "Register field!"));
         }
       } catch (e) {
         log("Register is field in event");
-        emit(AuthErrorState(errorMessage: "Login field!"));
+        emit(AuthErrorState(errorMessage: e.toString()));
       }
     });
-     on<LoaginEvent>((event, emit) async{
+    on<LoaginEvent>((event, emit) async {
       log("Login event entered");
-     emit(AuthLoadingState());
+      emit(AuthLoadingState());
       try {
         final userModels = await authServices.userLogin();
-      
-        if(userModels.isNotEmpty){
-          userModels.forEach((model){
-            if(model.email==event.email && model.password==event.password){
+
+        if (userModels.isNotEmpty) {
+          for (var model in userModels) {
+            if (model.email == event.email &&
+                model.password == event.password) {
               emit(AuthLoadedState(message: "Login success!"));
             }
-          });
+          }
           emit(AuthErrorState(errorMessage: "Email and passwod doesn't match"));
-          
-        }else{
+        } else {
           log("login is field in event");
           emit(AuthErrorState(errorMessage: "Email and passwod doesn't match"));
         }
       } catch (e) {
         log("login is field in event");
         emit(AuthErrorState(errorMessage: "Login field!"));
+      }
+    });
+
+    on<UserLogoutEvent>((event, emit) async {
+      emit(AuthLoadingState());
+      try {
+        await authServices.logout();
+
+        emit(AuthLoadedState(message: AppStrings.logoutS));
+      } catch (e) {
+        emit(AuthErrorState(errorMessage: e.toString()));
       }
     });
   }
