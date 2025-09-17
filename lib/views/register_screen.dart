@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_week_task/utils/app_sizedbox.dart';
 import 'package:team_week_task/utils/app_sizes.dart';
-import 'package:team_week_task/utils/app_string.dart';
 import 'package:team_week_task/views/cardregister_form_session.dart';
-import 'package:team_week_task/views/widgets/card_top_session.dart';
 
 
 class RegisterScreen extends StatelessWidget {

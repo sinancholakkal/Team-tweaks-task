@@ -4,6 +4,8 @@ import 'package:team_week_task/state/gender_bloc/gender_bloc.dart';
 import 'package:team_week_task/utils/app_string.dart';
 
 class GenderChoiceChip extends StatefulWidget {
+  const GenderChoiceChip({super.key});
+
   @override
   _GenderChoiceChipState createState() => _GenderChoiceChipState();
 }
@@ -34,9 +36,6 @@ class _GenderChoiceChipState extends State<GenderChoiceChip> {
                   selected: _selectedGender == gender,
                   selectedColor: Colors.blue.shade200,
                   onSelected: (selected) {
-                    // setState(() {
-                    //   _selectedGender = selected ? gender : null;
-                    // });
                     context.read<GenderBloc>().add(GenderSectingEvent(gender: selected?gender:null));
                   },
                 );
@@ -47,6 +46,9 @@ class _GenderChoiceChipState extends State<GenderChoiceChip> {
               _selectedGender == null
                   ? "No gender selected"
                   : "Selected: $_selectedGender",
+                  style: TextStyle(
+                    color: (_selectedGender==null)?Colors.red:null
+                  ),
             ),
           ],
         );

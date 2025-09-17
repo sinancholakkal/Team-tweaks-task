@@ -12,6 +12,7 @@ import 'package:team_week_task/views/widgets/elevated_button.dart';
 import 'package:team_week_task/views/widgets/gender_selecter_widget.dart';
 import 'package:team_week_task/views/widgets/rich_text_widget.dart';
 import 'package:team_week_task/views/widgets/text_form_widget.dart';
+import 'package:team_week_task/views/widgets/toast.dart';
 
 class CardRegisterFormSession extends StatefulWidget {
   const CardRegisterFormSession({super.key});
@@ -167,8 +168,13 @@ class _CardRegisterFormSessionState extends State<CardRegisterFormSession> {
                 onPressed: () {
                   if (_formKey.currentState!.validate() &&
                       genderController != null) {
-                    log(" Validated--------------------");
-                    log(genderController.toString());
+                    if(imagebyte==null){
+                      flutterToast(msg: "Please select your image!");
+                      log("Image no selected");
+                    }else{
+                      log(" Validated--------------------");
+                    }
+                    
 
                     // final registerModel = RegisterModel(
                     //   firstname: firstNameController.text.trim(),
